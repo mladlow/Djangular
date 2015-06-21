@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block body %}
+ng-app="dogdateApp"
+{% endblock %}
+{% block header %}
+Dog Dates
+{% endblock %}
+
+{%block content %}
+<div ui-view></div>
+
+<script type="text/ng-template" id="householdList">
+    <ul>
+        <li ng-repeat="household in households">
+            <a ui-sref="householdDetail({householdId:household.id})">
+                [[household.address]]
+            </a>
+        </li>
+    </ul>
+</script>
+
+<script type="text/ng-template" id="householdDetail">
+    <h2>Household Details</h2>
+    <p>[[household.address]]</p>
+    <p>[[household.fenced_yard]]</p>
+    <a ui-sref="householdList"> << Back to list</a>
+</script>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ STATIC_URL }}js/angular.js"></script>
+<script src="{{ STATIC_URL }}js/angular-ui-router.min.js"></script>
+<script src="{{ STATIC_URL }}js/dogdate-app.js"></script>
+<script src="{{ STATIC_URL }}js/dogdate-controllers.js"></script>
+<script src="{{ STATIC_URL }}js/dogdate-services.js"></script>
+{% endblock %}

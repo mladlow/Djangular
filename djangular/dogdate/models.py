@@ -14,9 +14,10 @@ class Household(models.Model):
 # name and (TODO) profile picture are common items between the two.
 # In this case, I want to just hold common information, so this should be an
 # abstract base class (https://docs.djangoproject.com/en/1.8/topics/db/models/#abstract-base-classes)
+# NOTE: I couldn't get this to work, and have given up on the inheritance bit temporarily while I try to get the app working
 class HouseholdResident(models.Model):
-    household = models.ForeignKey(Household)
     name = models.CharField(max_length=50)
+    #household = models.ForeignKey(Household)
 
     class Meta:
         abstract = True
@@ -25,13 +26,19 @@ class HouseholdResident(models.Model):
 
 # DogOwners can have a schedule representing when they are typically available
 # to participate in a doggy playdate.
+#class DogOwner(models.Model):
 class DogOwner(HouseholdResident):
+    #name = models.CharField(max_length=50)
+    household = models.ForeignKey(Household, related_name="dogOwners")
     # Actually implementation of Schedule is not in the MVP
     schedule = models.TextField()
 
 # Dogs have age, weight (representing general size), and can have a blurb 
 # about their play style.
+#class Dog(models.Model):
 class Dog(HouseholdResident):
+    #name = models.CharField(max_length=50)
+    household = models.ForeignKey(Household, related_name="dogs")
     age = models.IntegerField()
     weight = models.IntegerField()
     play_style = models.TextField()
